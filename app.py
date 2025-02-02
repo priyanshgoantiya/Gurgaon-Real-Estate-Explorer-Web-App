@@ -9,10 +9,11 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import ast
 # Load the data and model
-with open('/content/data.df', 'rb') as file:
+with open('model/data.df', 'rb') as file:
+    # File handling code here', 'rb') as file:
     df = pickle.load(file)
 
-with open('/content/model(random_forest).pkl', 'rb') as file:
+with open('model/model(random_forest).pkl', 'rb') as file:
     pipeline = pickle.load(file)
 
 # Sidebar Navigation
@@ -67,9 +68,9 @@ elif selection == "Analytical Module":
     word clouds,bar charts, and box plots. It allows users to analyze data based on property type, sector, age, and other features, 
      insights into pricing, distribution, and property characteristics through interactive visualizations.''')
     st.title("Analytical Module")
-    df = pd.read_csv('/content/gurgaon_property_data_after_Missing_Value_Imputation (1)')
+    df = pd.read_csv('data/gurgaon_property_data_after_Missing_Value_Imputation (1)')
     st.markdown("### Mapping the Real Estate Trends of Gurgaon by Sector")
-    new_df=pd.read_csv('/content/sector wise price distribution')
+    new_df=pd.read_csv('data/sector wise price distribution')
     new_df=new_df.set_index('sector')
     # Scatter Plot on Mapbox
     fig_new = px.scatter_mapbox(new_df,
@@ -88,7 +89,7 @@ elif selection == "Analytical Module":
     st.plotly_chart(fig_new, use_container_width=True)
     st.markdown("### Word Cloud of Amenities in Gurgaon Real Estate Properties")
     # Load data
-    df2 = pd.read_csv('/content/gurgaon_properties_cleaned_data (1) (2)')
+    df2 = pd.read_csv('data/gurgaon_properties_cleaned_data (1) (2)')
     # Ensure 'features' column contains lists
     df2['features'] = df2['features'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) and "[" in x else [])
     # Generate word cloud text
@@ -198,7 +199,7 @@ elif selection == "Analytical Module":
     plt.tick_params(axis='both', which='major', labelsize=12)  # Customize tick labels size
     st.pyplot(fig_sns)
     st.markdown("### Age Analysis of Properties by Floor Height and Area Categories.")
-    df3=pd.read_csv('/content/gurgaon_property_real_estate_data_before_ordinal_encoding')
+    df3=pd.read_csv('data/gurgaon_property_real_estate_data_before_ordinal_encoding')
     df3['area_category'] = pd.cut(df3['Built_Up_area'], bins=[0, 2000, 8000, 35000], labels=['Small', 'Medium', 'Large'])
     # Violin plot with 'area_category' as hue
     fig_plt=plt.figure(figsize=(12,6))
@@ -238,10 +239,10 @@ elif selection == "Recommender System":
        "including facilities, price similarity, and nearby locations.")
     st.title("Recommender System")
     # Implement property recommender system here
-    location_df=pickle.load(open('/content/location_df (2)','rb'))
-    cos_sim1=pickle.load(open('/content/cosin_sim_facility','rb'))
-    cos_sim2=pickle.load(open('/content/cosin_sim_prices','rb'))
-    cos_sim3=pickle.load(open('/content/cosin_sim_location_nearby','rb'))
+    location_df=pickle.load(open('model/location_df (2)','rb'))
+    cos_sim1=pickle.load(open('model/cosin_sim_facility','rb'))
+    cos_sim2=pickle.load(open('model/cosin_sim_prices','rb'))
+    cos_sim3=pickle.load(open('model/cosin_sim_location_nearby','rb'))
     def  recommender_final(property_name,n=246):
       cosine_sim_final=cos_sim1*0.5+cos_sim2*0.8+cos_sim3*1
       sim_score=list(enumerate(cosine_sim_final[location_df.index.get_loc(property_name)]))
