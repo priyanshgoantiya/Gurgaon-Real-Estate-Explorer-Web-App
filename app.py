@@ -25,8 +25,8 @@ if selection == "Home":
   st.write("This dashboard provides insights, analysis, and predictions for real estate properties in Gurgaon.")
   st.markdown("## Features:")
   st.markdown("- **Price Prediction:** Predict property prices based on features.")
-  st.markdown("- **Analytical Module:** Explore trends and insights in the real estate market.")
-  st.markdown("- **Insight Model:** Gain deeper understanding through data visualization.")
+  st.markdown("- **Analytical Module:**  Gain deeper understanding through data visualization.")
+  st.markdown("- **Insight Model:** Explore trends and insights in the real estate market.")
   st.markdown("- **Recommender System:** Get property recommendations based on preferences.")
 # Price Prediction Page
 if selection == "Price Prediction":
