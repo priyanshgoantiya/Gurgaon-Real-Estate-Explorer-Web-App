@@ -47,6 +47,8 @@ cd Gurgaon-Real-Estate-Explorer-Web-App
 pip install -r requirements.txt
 3️⃣ Run the Application
 streamlit run app.py
+
+
 📊 Dataset
 The dataset contains real estate listings in Gurgaon, including:
 ✔️ Property Features (Property Type, Size, Bedrooms, Bathrooms, Balconies, Furnishing Type)
