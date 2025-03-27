@@ -51,21 +51,31 @@ streamlit run app.py
 
 📊 Dataset
 The dataset contains real estate listings in Gurgaon, including:
+
 ✔️ Property Features (Property Type, Size, Bedrooms, Bathrooms, Balconies, Furnishing Type)
+
 ✔️ Location-based Data (Sector, Floor Category, Connectivity)
+
 ✔️ Price Trends (Historical and Current Property Rates)
+
 ✔️ Demographic Insights (Luxury Category)
 
 🏗️ Future Enhancements
 ✅ Integrate real-time property data from APIs
+
 ✅ Improve predictive accuracy using advanced ML models
+
 ✅ Enhance recommendation algorithms with Deep Learning
+
 ✅ Add more city-wise real estate analysis
 
 🤝 Contributions
 Contributions are welcome! If you want to improve or extend this project, feel free to:
+
 🔹 Fork the repository
+
 🔹 Open an issue for discussion
+
 🔹 Submit a pull request
 
 📜 License
