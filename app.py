@@ -300,7 +300,7 @@ elif selection == "Insight Model":
     st.plotly_chart(fig_feat, use_container_width=True)
     # predicted = np.expm1(pipeline.predict(df))
     # actual = np.expm1(target)  # Replace with appropriate column
-    predicted = np.expm1(pipeline.predict(df1.drop(columns=['price']))
+    predicted = np.expm1(pipeline.predict(df1.drop(columns=['price'])))
     actual = np.expm1(df1['price'])  # Replace with appropriate column
     # Create a DataFrame for plotting
     pred_df = pd.DataFrame({'Actual': actual, 'Predicted': predicted})
