@@ -307,3 +307,22 @@ elif selection == "Insight Model":
                                 trendline="ols")
     fig_actual_vs_pred.update_layout(width=800, height=600)
     st.plotly_chart(fig_actual_vs_pred, use_container_width=True)
+
+    
+    residuals = actual - predicted
+    # Histogram of residuals
+    fig_resid_hist, ax = plt.subplots(figsize=(8, 5))
+    sns.histplot(residuals, kde=True, color='skyblue')
+    ax.set_title("Histogram of Residuals")
+    ax.set_xlabel("Residual")
+    ax.set_ylabel("Frequency")
+    st.pyplot(fig_resid_hist)
+    
+    # Q-Q plot using statsmodels
+    fig_qq = sm.qqplot(residuals, line='45')
+    plt.title("Q-Q Plot of Residuals")
+    st.pyplot(plt.gcf())
+
+
+
+                                         
