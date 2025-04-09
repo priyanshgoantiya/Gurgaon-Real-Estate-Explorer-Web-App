@@ -7,6 +7,7 @@ import seaborn as sns
 import plotly.express as px
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import statsmodels.api as sm  # For OLS trendline in Plotly
 import ast
 # Load the data and model
 with open('model/data.df', 'rb') as file:
