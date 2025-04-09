@@ -272,10 +272,10 @@ elif selection == "Insight Model":
     st.write("This page provides insights into the data and model performance of the real estate price prediction system.")
 
     st.markdown("### 🔍 Feature Importance (Random Forest)")
-
-    # Get feature importances
-    importances = pipeline.named_steps['randomforestregressor'].feature_importances_
-    features = pipeline.named_steps['columntransformer'].get_feature_names_out()
+    # Access feature importances
+    importances = pipeline.named_steps['regressor'].feature_importances_
+    # Get feature names after transformation
+    features = pipeline.named_steps['preprocessor'].get_feature_names_out()
 
     feature_df = pd.DataFrame({'Feature': features, 'Importance': importances})
     feature_df = feature_df.sort_values(by='Importance', ascending=False).reset_index(drop=True)
