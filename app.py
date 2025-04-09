@@ -17,7 +17,6 @@ with open('model/data.df', 'rb') as file:
 with open('data/target', 'rb') as file:
     # File handling code here', 'rb') as file:
     target= pickle.load(file)
-    df1= pickle.load(file)
 with open('model/model(random_forest).pkl', 'rb') as file:
     pipeline = pickle.load(file)
 
