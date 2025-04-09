@@ -322,6 +322,40 @@ elif selection == "Insight Model":
     fig_qq = sm.qqplot(residuals, line='45')
     plt.title("Q-Q Plot of Residuals")
     st.pyplot(plt.gcf())
+    # Calculate regression metrics
+    mae = mean_absolute_error(actual, predicted)
+    mse = mean_squared_error(actual, predicted)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(actual, predicted)
+    
+    # Create a DataFrame for the metrics
+    metrics_df = pd.DataFrame({
+        'Metric': ['MAE', 'MSE', 'RMSE', 'R2 Score'],
+        'Value': [mae, mse, rmse, r2]
+    })
+    
+    # Create a bar plot using Plotly Express
+    fig_metrics = px.bar(
+        metrics_df, 
+        x='Metric', 
+        y='Value',
+        title="Regression Metrics",
+        text='Value',
+        color='Metric',
+        color_discrete_sequence=px.colors.qualitative.Plotly
+    )
+    
+    # Optional layout customization for a polished look
+    fig_metrics.update_layout(
+        xaxis_title="Metric",
+        yaxis_title="Value",
+        template='plotly_white',
+        showlegend=False
+    )
+    fig_metrics.update_traces(texttemplate='%{text:.2f}', textposition='outside')
+    
+    # Display the plot in Streamlit
+    st.plotly_chart(fig_metrics, use_container_width=True)
 
 
 
