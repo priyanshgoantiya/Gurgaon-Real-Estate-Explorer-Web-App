@@ -14,9 +14,9 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 with open('model/data.df', 'rb') as file:
     # File handling code here', 'rb') as file:
     df = pickle.load(file)
-with open('data/data (3).df', 'rb') as file:
+with open('data/target', 'rb') as file:
     # File handling code here', 'rb') as file:
-    df1 = pickle.load(file)
+    target= pickle.load(file)
 with open('model/model(random_forest).pkl', 'rb') as file:
     pipeline = pickle.load(file)
 
@@ -294,4 +294,16 @@ elif selection == "Insight Model":
                       color_continuous_scale='viridis')
     fig_feat.update_layout(yaxis=dict(autorange='reversed'))
     st.plotly_chart(fig_feat, use_container_width=True)
-
+    predicted = np.expm1(pipeline.predict(df))
+    actual = np.expm1(target)  # Replace with appropriate column
+    
+    # Create a DataFrame for plotting
+    pred_df = pd.DataFrame({'Actual': actual, 'Predicted': predicted})
+    
+    # Plot using Plotly Express
+    fig_actual_vs_pred = px.scatter(pred_df, x='Actual', y='Predicted',
+                                title='Actual vs. Predicted Prices',
+                                labels={'Actual': 'Actual Price', 'Predicted': 'Predicted Price'},
+                                trendline="ols")
+    fig_actual_vs_pred.update_layout(width=800, height=600)
+    st.plotly_chart(fig_actual_vs_pred, use_container_width=True)
