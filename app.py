@@ -295,8 +295,8 @@ elif selection == "Insight Model":
 
     # Predict using the pipeline (assumes log1p transformation was applied)
     df1=pd.read_csv('data/gurgaon_property_real_estate_data_before_ordinal_encoding')
-    X_data = df.drop(columns=['price'])
-    y_true = np.expm1(df['price'])
+    X_data = df1.drop(columns=['price'])
+    y_true = np.expm1(df1['price'])
     y_pred = np.expm1(pipeline.predict(X_data))
 
     # Compute performance metrics
