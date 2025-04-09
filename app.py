@@ -268,6 +268,82 @@ elif selection == "Recommender System":
 
 
 elif selection == "Insight Model":
-  st.title("Insight Model 📊")
-  st.write("This page provides insights into the data and model performance.")
-  # Add any model performance analysis, feature importance, etc.
+    st.title("Insight Model 📊")
+    st.write("This page provides insights into the data and model performance of the real estate price prediction system.")
+
+    st.markdown("### 🔍 Feature Importance (Random Forest)")
+
+    # Get feature importances
+    importances = pipeline.named_steps['randomforestregressor'].feature_importances_
+    features = pipeline.named_steps['columntransformer'].get_feature_names_out()
+
+    feature_df = pd.DataFrame({'Feature': features, 'Importance': importances})
+    feature_df = feature_df.sort_values(by='Importance', ascending=False).reset_index(drop=True)
+
+    # Plot Feature Importance with Plotly
+    fig_feat = px.bar(feature_df.head(15),
+                      x='Importance',
+                      y='Feature',
+                      orientation='h',
+                      title='Top 15 Feature Importances',
+                      color='Importance',
+                      color_continuous_scale='viridis')
+    fig_feat.update_layout(yaxis=dict(autorange='reversed'))
+    st.plotly_chart(fig_feat, use_container_width=True)
+
+    st.markdown("### 📈 Model Performance Metrics")
+
+    # Predict using the pipeline (assumes log1p transformation was applied)
+    X_data = df.drop(columns=['price'])
+    y_true = np.expm1(df['price'])
+    y_pred = np.expm1(pipeline.predict(X_data))
+
+    # Compute performance metrics
+    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+    mae = mean_absolute_error(y_true, y_pred)
+    rmse = mean_squared_error(y_true, y_pred, squared=False)
+    r2 = r2_score(y_true, y_pred)
+
+    # Display metrics
+    perf_df = pd.DataFrame({
+        "Metric": ["MAE", "RMSE", "R² Score"],
+        "Value": [round(mae, 2), round(rmse, 2), round(r2, 4)]
+    })
+
+    fig_metrics = px.bar(perf_df, x="Metric", y="Value", text="Value",
+                         title="Model Performance Metrics", color="Value",
+                         color_continuous_scale='icefire')
+    st.plotly_chart(fig_metrics, use_container_width=True)
+
+    st.markdown("### 📉 Residual Analysis")
+
+    # Residuals
+    residuals = y_true - y_pred
+    residuals_df = pd.DataFrame({'Residuals': residuals})
+
+    # Plot Residuals Distribution
+    fig_resid = px.histogram(residuals_df,
+                             x='Residuals',
+                             nbins=50,
+                             marginal='box',
+                             title='Distribution of Residuals',
+                             color_discrete_sequence=['indianred'])
+    st.plotly_chart(fig_resid, use_container_width=True)
+
+    st.markdown("### 🎯 Actual vs Predicted Prices")
+
+    # Actual vs Predicted Scatter Plot
+    comparison_df = pd.DataFrame({
+        'Actual Price': y_true,
+        'Predicted Price': y_pred
+    })
+
+    fig_compare = px.scatter(comparison_df,
+                             x='Predicted Price',
+                             y='Actual Price',
+                             trendline='ols',
+                             title='Predicted vs Actual Prices',
+                             opacity=0.5,
+                             color_discrete_sequence=['dodgerblue'])
+    st.plotly_chart(fig_compare, use_container_width=True)
+
