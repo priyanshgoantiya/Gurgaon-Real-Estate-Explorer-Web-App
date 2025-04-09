@@ -12,7 +12,9 @@ import ast
 with open('model/data.df', 'rb') as file:
     # File handling code here', 'rb') as file:
     df = pickle.load(file)
-
+with open('data/df.pkl', 'rb') as file:
+    # File handling code here', 'rb') as file:
+    df1 = pickle.load(file)
 with open('model/model(random_forest).pkl', 'rb') as file:
     pipeline = pickle.load(file)
 
@@ -294,9 +296,8 @@ elif selection == "Insight Model":
     st.markdown("### 📈 Model Performance Metrics")
 
     # Predict using the pipeline (assumes log1p transformation was applied)
-    df1=pd.read_csv('data/gurgaon_property_real_estate_data_before_ordinal_encoding')
-    expected_features = pipeline.named_steps['preprocessor'].feature_names_in_
-    X_data = df1[expected_features]
+ 
+    X_data = df.drop(columns='price')
     # X_data = df1.drop(columns=['price'])
     y_true = np.expm1(df1['price'])
     y_pred = np.expm1(pipeline.predict(X_data))
