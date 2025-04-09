@@ -9,6 +9,7 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import statsmodels.api as sm  # For OLS trendline in Plotly
 import ast
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 # Load the data and model
 with open('model/data.df', 'rb') as file:
     # File handling code here', 'rb') as file:
@@ -297,17 +298,19 @@ elif selection == "Insight Model":
     st.markdown("### 📈 Model Performance Metrics")
 
     # Predict using the pipeline (assumes log1p transformation was applied)
-
-    X_data = df1.drop(columns=['price'])
-    y_true = np.expm1(df1['price'])
-    y_pred = np.expm1(pipeline.predict(X_data))
+    y = df1["price"]
+    # Predict
+    y_pred = pipeline.predict(df)
+    y_pred = np.expm1(y_pred)  # If you used log1p during training
+    y_true = np.expm1(y)       # Only if y was log1p transformed during training
 
     # Compute performance metrics
-    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
     mae = mean_absolute_error(y_true, y_pred)
-    rmse = mean_squared_error(y_true, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_true, y_pred))
     r2 = r2_score(y_true, y_pred)
-
+    st.metric("MAE", f"{mae:.2f}")
+    st.metric("RMSE", f"{rmse:.2f}")
+    st.metric("R² Score", f"{r2:.2f}")
     # Display metrics
     perf_df = pd.DataFrame({
         "Metric": ["MAE", "RMSE", "R² Score"],
@@ -323,7 +326,8 @@ elif selection == "Insight Model":
 
     # Residuals
     residuals = y_true - y_pred
-    residuals_df = pd.DataFrame({'Residuals': residuals})
+    fig = px.histogram(residuals, nbins=50, title='Residual Distribution')
+    st.plotly_chart(fig)
 
     # Plot Residuals Distribution
     fig_resid = px.histogram(residuals_df,
