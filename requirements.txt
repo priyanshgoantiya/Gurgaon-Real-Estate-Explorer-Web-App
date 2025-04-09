@@ -7,3 +7,4 @@ Matplotlib==3.10.0
 Scikit-learn==1.6.1
 WordCloud==1.9.4
 Streamlit==1.41.1
+statsmodels
