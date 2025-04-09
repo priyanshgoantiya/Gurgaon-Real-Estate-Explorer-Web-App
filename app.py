@@ -17,9 +17,6 @@ with open('model/data.df', 'rb') as file:
 with open('data/target', 'rb') as file:
     # File handling code here', 'rb') as file:
     target= pickle.load(file)
-# data/data (3).df
-with open('data/data (3).df', 'rb') as file:
-    # File handling code here', 'rb') as file:
     df1= pickle.load(file)
 with open('model/model(random_forest).pkl', 'rb') as file:
     pipeline = pickle.load(file)
@@ -300,8 +297,8 @@ elif selection == "Insight Model":
     st.plotly_chart(fig_feat, use_container_width=True)
     # predicted = np.expm1(pipeline.predict(df))
     # actual = np.expm1(target)  # Replace with appropriate column
-    predicted = np.expm1(pipeline.predict(df1.drop(columns=['price'])))
-    actual = np.expm1(df1['price'])  # Replace with appropriate column
+    predicted = np.expm1(pipeline.predict(df))
+    actual = np.expm1(target)  # Replace with appropriate column
     # Create a DataFrame for plotting
     pred_df = pd.DataFrame({'Actual': actual, 'Predicted': predicted})
     
