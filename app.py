@@ -12,7 +12,7 @@ import ast
 with open('model/data.df', 'rb') as file:
     # File handling code here', 'rb') as file:
     df = pickle.load(file)
-with open('data/df.pkl', 'rb') as file:
+with open('data/data (3).df', 'rb') as file:
     # File handling code here', 'rb') as file:
     df1 = pickle.load(file)
 with open('model/model(random_forest).pkl', 'rb') as file:
